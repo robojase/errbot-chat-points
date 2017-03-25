@@ -1,0 +1,9 @@
+[Core]
+Name = PointsPlugin
+Module = points
+
+[Python]
+Version = 2+
+
+[Documentation]
+Description = Point tracking plugin.
