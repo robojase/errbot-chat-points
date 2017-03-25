@@ -13,8 +13,6 @@ CONFIG_TEMPLATE = {
 class PointsPlugin(BotPlugin):
     """Plugin for tracking user points"""
 
-    def callback_presence(self, presence):
-        pass
     def return_configuration_template(self):
         """Returns default configuration template"""
         return CONFIG_TEMPLATE
