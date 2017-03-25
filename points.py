@@ -34,8 +34,10 @@ class PointsPlugin(BotPlugin):
         if mess.frm.person() is not in self['UserInfo']:
             return '{0}: No {1} recorded yet'.format(mess.frm.nick(), point_plural)
 
-        return '[{0}]: {1} {2} '.format(mess.frm.nick(), pts, point_plural)
         pts = self['UserInfo'][mess.frm.person()]['pts']
+        time = self['UserInfo'][mess.frm.person()]['time']
+        return '{0}: {1} {2} ({3} seconds) '.format(mess.frm.nick(), pts,
+                                                    point_plural, time)
 
     @arg_botcmd('user', admin_only=True)
     @arg_botcmd('value', admin_only=True)
@@ -59,7 +61,13 @@ class PointsPlugin(BotPlugin):
         """Add points to every user present when this function is called"""
         room = self._bot.query_room()
         for user in room.occupants():
+            if user.person() not in self['UserInfo']:
+                self['UserInfo'][user.person()] = {
+                'pts': 0,
+                'time': 0
+                }
             self['UserInfo'][user.person()]['pts'] += self.config['POINTS_PER_TICK']
+            self['UserInfo'][user.person()]['time'] += self.config['POINTS_TIMER_S']
 
     def return_configuration_template(self):
         """Returns default configuration template"""
