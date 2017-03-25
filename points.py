@@ -36,6 +36,24 @@ class PointsPlugin(BotPlugin):
         pts = self['UserPoints'][mess.frm.person()]
         return '[{0}]: {1} {2} '.format(mess.frm.nick(), pts, point_plural)
 
+    @arg_botcmd('user', admin_only=True)
+    @arg_botcmd('value', admin_only=True)
+    def points_set(self, mess, user, value):
+        """Set a users points to a particular value"""
+        self['UserPoints'][user] = int(value)
+
+    @arg_botcmd('user', admin_only=True)
+    @arg_botcmd('value', admin_only=True)
+    def points_add(self, mess, user, value):
+        """Add points to a particular user"""
+        self['UserPoints'][user] += int(value)
+
+    @arg_botcmd('user', admin_only=True)
+    @arg_botcmd('value', admin_only=True)
+    def points_remove(self, mess, user, value):
+        """Add points to a particular user"""
+        self['UserPoints'][user] -= int(value)
+
     def add_timer_points(self):
         """Add points to every user present when this function is called"""
         room = self._bot.query_room()
