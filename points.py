@@ -27,9 +27,6 @@ class PointsPlugin(BotPlugin):
         """Add points to every user present when this function is called"""
         room = self._bot.query_room()
         for user in room.occupants():
-            # print(user.person())
-            # print(user.nick())
-            #TODO: Check status
             self['UserPoints'][user.person()] += self.config['POINTS_PER_TICK']
 
     def return_configuration_template(self):
