@@ -23,6 +23,15 @@ class PointsPlugin(BotPlugin):
         if not 'UserPoints' in self:
             self['UserPoints'] = {}
 
+    @botcmd
+    def points(self, mess, args):
+        """Respond to user with the number of points they have accumulated."""
+        if mess.frm.person() is not in self['UserPoints']:
+            return '{0}: No points recorded yet'.format(mess.frm.nick())
+
+        pts = self['UserPoints'][mess.frm.person()]
+        return '[{0}]: {1} points'.format(mess.frm.nick(), pts)
+
     def add_timer_points(self):
         """Add points to every user present when this function is called"""
         room = self._bot.query_room()
