@@ -7,7 +7,8 @@ from itertools import chain
 CONFIG_TEMPLATE = {
     'ROOM': 'changeme',
     'POINTS_TIMER_S': 60,
-    'POINTS_PER_TICK': 5
+    'POINTS_PER_TICK': 5,
+    'POINT_NAME': 'point'
 }
 
 class PointsPlugin(BotPlugin):
@@ -26,11 +27,14 @@ class PointsPlugin(BotPlugin):
     @botcmd
     def points(self, mess, args):
         """Respond to user with the number of points they have accumulated."""
+
+        #TODO: Make this smarter for general words
+        point_plural = '{0}s'.format(self['POINT_NAME'])
         if mess.frm.person() is not in self['UserPoints']:
-            return '{0}: No points recorded yet'.format(mess.frm.nick())
+            return '{0}: No {1} recorded yet'.format(mess.frm.nick(), point_plural)
 
         pts = self['UserPoints'][mess.frm.person()]
-        return '[{0}]: {1} points'.format(mess.frm.nick(), pts)
+        return '[{0}]: {1} {2} '.format(mess.frm.nick(), pts, point_plural)
 
     def add_timer_points(self):
         """Add points to every user present when this function is called"""
